@@ -36,7 +36,7 @@ Library.prototype.getBooks = function() {
 }
 // book constructur/prototype
 var Book = function(title, author, numberOfPages, publishDate){
-  if (!newLibrary.validateString(title)){
+  /*if (!newLibrary.validateString(title)){
     console.log("Invalid Title");
     alert("Invalid Title");
   }
@@ -47,7 +47,7 @@ var Book = function(title, author, numberOfPages, publishDate){
   if (!newLibrary.validateNumber(numberOfPages)){
     console.log("Invalid pages number");
     alert("Invalid pages number");
-  }
+  }*/
   this.title = title;
   this.author = author;
   this.numberOfPages = numberOfPages;
@@ -348,7 +348,7 @@ Library.prototype.addBookUser = function(){
   var bookinput3 = $('#addbook-pages').val();
   var bookinput4 = $('#addbook-date').val();
   var bookAdd = new Book(bookinput1,bookinput2,bookinput3,bookinput4);
-  //this part in if, for no more books to add
+  //this part in if, for no more books to add, user clicked NO
   var addBookvalue = this.addBook(bookAdd);
   this.populateTable();
   $('.jumbotron').html("<h2>" + (addBookvalue?'Books successfully added':'Failed to add book') + "</h2>");
@@ -367,6 +367,9 @@ Library.prototype.showAddMultipleBooks = function(){
   var addBooksDiv = $('#multiple-books-table-div');//document.getElementById('multiple-books-table-div');
   if (addBooksDiv.css("display") == "none"){
     addBooksDiv.css("display", "block");
+    $("#add-multiple-books-button").show();
+    $("#addMore-No-Button").show();
+    $("#addMore-Yes-Button").show();
   }else{
     addBooksDiv.css("display", "none");
   }
@@ -387,22 +390,53 @@ Library.prototype.showAddMultipleBooks = function(){
     authorsDiv.css("display", "none");
   }
 }
+
 Library.prototype.anadirUnLibroOMasLibros = function (){//mi logica nueva
+  var bookCounter = -1;
   addBookUser(); //until before populate, just creates the new book
-  $('#addMore-No-Button').On('click',this.addBook(bookAdd));//A function that calls addbook and populateTable
+  $('#addMore-No-Button').On('click',this.addBookUser(bookAdd));//A function that calls addbook and populateTable
   this.populateTable(); //this is the library state at the end of adding
   //to do make the table with inputs hide division with id=? hide or whatever
-
-  $('#addMore-Yes-Button').On('click',this.addBooks(bookAdd));//call function that :
-  //while user keeps pushing YES
-    //increase a counter
-    //displays another table row to enter another book
-    //create the object
-    //push to arrays
-  //call this.addbooks(array)
-  //make table disapear
 }
+
+var multiRowCount = 1;
+//var variousBooksEntry = [];
+Library.prototype.addingRowsAddBooks = function(){
+
+
+  $("#addbooks-table > tbody:last-child")
+  	.append('<tr><td><input id=\"multiple-input-title' +  ++multiRowCount + '\" size=\"30\" type=\"text\"></td>')
+  	.append('<td><input id=\"multiple-input-author' + multiRowCount + '\" size=\"20\" type=\"text\"></td>')
+  	.append('<td><input id=\"multiple-input-pages' + multiRowCount + '\" size=\"4\" type=\"text\"></td>')
+  	.append('<td><input id=\"multiple-input-publishdate' + multiRowCount + '\" size=\"4\" type=\"text\"></td></tr>');
+    alert('please enter values: ');
+    this.AddBooksMultiple();
+    //the value here is undefined because user has not typed anything?
+
+}
+Library.prototype.AddBooksMultiple = function(){
+  var variousBooksEntry = [];
+  var bookinputs1 = $("#multiple-input-title").text();
+  //var bookinputs1 = 'titleAdriana';
+  var bookinputs2 = $('#multiple-input-author').val();
+  var bookinputs3 = $('#multiple-input-pages').val();
+  var bookinputs4 = $('#multiple-input-date').val();
+  console.log('I am input title: ' + bookinputs1 );
+  var bookAdd = new Book(bookinputs1,bookinputs2,bookinputs3,bookinputs4);
+  //this part in if, for no more books to add, user clicked NO
+  variousBooksEntry.push(bookAdd);
+  //arrayOfValues.push(this.getBooks()[i].title);
+  console.log('I am the array of multiple books title: ' + JSON.stringify(variousBooksEntry));
+
+}
+Library.prototype.addBooksHandler = function(){
+  this.addBooks(variousBooksEntry);
+}
+
 Library.prototype.init = function(){
+  $("#add-multiple-books-button").hide();
+  $("#addMore-No-Button").hide();
+  $("#addMore-Yes-Button").hide();
   $('#getbook-button-title').on('click',($.proxy(this.displayBookByTitle, this)));
   $('#getbook-button-author').on('click', ($.proxy(this.displayBookByAuthor, this)));
   $('#remove-button-title').on('click', ($.proxy(this.remBookByTitle, this)));
@@ -415,6 +449,9 @@ Library.prototype.init = function(){
   //$('#addMore-No-Button').on('click',);
   //$('#addMore-Yes-Button').on('click',);
   $('#list-authors-button').on('click', ($.proxy(this.showAuthors, this)));
+  $('#addMore-Yes-Button').on('click',($.proxy(this.addingRowsAddBooks, this)));
+  //$('#addMore-No-Button').on('click',($.proxy(this.addBookUser, this)));
+  //$('#addMore-Yes-Button').on('click',this.AddBooksMultiple());
 }
 
 $(document).ready(function(){

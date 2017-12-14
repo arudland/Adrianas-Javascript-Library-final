@@ -214,3 +214,70 @@ $(document).ready(function(){
    //newLibrary.removeBookByTitle(bookinput.value)
 
 //}); //end of document ready
+/***************WORK IN PROGRESS*************/
+/*var $newRow = $("#addbooks-table").find('tbody')
+.append($('<tr>')
+  .append($('<td>')
+    .append($('<input>').attr('id', 'someInputTitle').attr('size', '30').attr('type', 'text'))
+      .append($('</td>'))
+    )
+  )
+);
+var $newcell1 = $("#addbooks-table").find('tbody')
+  .append($('<td>')
+    .append($('<input>').attr('id', 'someInputauthor').attr('size', '20').attr('type', 'text'))
+      .append($('</td>'))
+    )
+  );
+var $finalCell = $("#addbooks-table").find('tbody')
+  .append($('<td>')
+    .append($('<input>').attr('id', 'someInputdate').attr('size', '4').attr('type', 'text'))
+      .append($('</td>'))
+        .append($('</tr>'))
+    )
+  );*/
+
+  /*var multiRowCount = 1;
+
+  Then, when they bonk the button to add a new row, you call something like this (untested, but you can do that) :
+
+  $("#addbooks-table > tbody:last-child")
+  	.append('<td><input id=\"multiple-input-title'+  ++multiRowCount + '\" size=\"30\" type=\"text\"></td>')
+  	.append('<td><input id=\"multiple-input-author' + multiRowCount + '\" size=\"20\" type=\"text\"></td>')
+  	.append('<td><input id=\"multiple-input-pages' + multiRowCount + '\" size=\"4\" type=\"text\"></td>')
+  	.append('<td><input id=\"multiple-input-publishdate' + multiRowCount + '\" size=\"4\" type=\"text\"></td></tr>');
+
+//$("#addbooks-table").find('tbody').append($('<tr><td>')
+
+'<input id="multiple-input-title1" type="text" size="30"></td>
+  <td><input id="multiple-input-author1" type="text" size="20"></td>
+   <td><input id="multiple-input-pages1" type="text" size="4"></td>');
+   <td><input id="multiple-input-publishdate1" type="text" size="4"></td></tr>'));
+
+
+//$('#addMore-Yes-Button').On('click',this.addingRowsAddBooks());//call function that :
+//while user keeps pushing YES
+  //var bookCounter++; //increase a counter
+  //displays another table row to enter another book (addbooks-table append another row)
+  var anotherBookTableElements =
+  <tr><td><input id="multiple-input-title1" type="text" size="30"></td>
+    <td><input id="multiple-input-author1" type="text" size="20"></td>
+    <td><input id="multiple-input-pages1" type="text" size="4"></td>
+    <td><input id="multiple-input-publishdate1" type="text" size="4"></td>
+  </tr>
+  $('#addbooks-table > tbody:last-child').append('<tr>...</tr><tr>...</tr>');
+//testing another way
+//  $("#addbooks-table").find('tbody').append($('<tr>').append($('<td>')
+//    .append($('<input>').attr('id', 'someInputTitle').attr('size', '30').attr('type', 'text')).append($('</td>'))));
+
+  $("#addbooks-table").find('tbody').append($('<td>')
+          .append($('<input>').attr('id', 'someInputAuthor').attr('size', '20').attr('type', 'text')));
+  $("#addbooks-table").find('tbody').append($('<tr>').append($('<td>')
+          .append($('<input>').attr('id', 'someInputpages').attr('size', '4').attr('type', 'text'))));
+  $("#addbooks-table").find('tbody').append($('<tr>').append($('<td>')
+          .append($('<input>').attr('id', 'someInputdate').attr('size', '4').attr('type', 'text'))));
+  //create the object
+  //push to arrays
+  //end while
+//call this.addbooks(array)
+//make table disapear*/
