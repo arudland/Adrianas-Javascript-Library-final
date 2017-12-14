@@ -1,0 +1,43 @@
+.red-border{
+  border: 5px solid red;
+}
+
+.bold-title{
+  font-weight: bolder;
+}
+
+.red-font{
+  color :red;
+}
+
+.blue-font{
+  color :rgb(19, 26, 208);
+}
+
+.header-background{
+  background-color: rgb(209, 74, 24);
+}
+.black-background{
+  background-color: black;
+}
+
+.center-divs{
+  align-items: center;
+}
+.top-pad{
+  padding-top: 20px;
+}
+
+.left-pad-addbook{
+  padding-left:0px;
+}
+
+.top-margin-buttons{
+  margin-top: 10px;
+}
+.top-margin{
+  margin-top: 30px;
+}
+.top-margin-random{
+  margin-top: 20px;
+}

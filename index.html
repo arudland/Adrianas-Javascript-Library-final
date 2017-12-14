@@ -1,3 +1,139 @@
 <html>
-<script src="DLibrary.js"> </script>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <title>Library's User interface</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row header-background"><!--1st row header-->
+          <div class="col-md-4">
+              <h3></h3>
+          </div>
+          <div class="col-md-4">
+            <h3 class = "bold-title">Library's user interface</h3>
+          </div>
+          <div class="col-md-4">
+            <h3></h3>
+          </div>
+        </div>
+        <div class="row"> <!--2nd row-->
+          <div class="col-md-4">
+            <div class= "red-font top-pad">  </div>
+            <input id="get-book-by-input" type="text" name="search" size="50" placeholder="Enter title/author here...">
+            <button type="button" id="getbook-button-title" name="get-book-button1">Get book by title</button>
+            <button type="button" id="getbook-button-author" name="get-book-button2">Get book by author</button>
+          </div>
+          <div class="col-md-4">
+            <div class="red-font top-pad"> </div>
+            <input id="remove-book" type="text" name="search" value="" size="50" placeholder="Enter full title/author name here...">
+            <button type="button" id="remove-button-title" name="remove-button1">Remove book by title</button>
+            <button type="button" id="remove-button-author" name="remove-button2">Remove book by author</button>
+          </div>
+          <div class="col-md-4">
+            <!--div class="red-font top-pad"> </div-->
+            <h5 class="top-margin-random">Let us choose a book for you...</h5>
+            <button type="button" id="Random-button-title" name="Random-button1">Random book by title</button>
+            <button type="button" id="Random-button-author" name="Random-button2">Random book by author</button>
+          </div>
+        </div><!-- 2nd row -->
+      <!--/div><old container-->
+        <div class="row top-margin"> <!--4thd row-->
+          <div class="col-md-6"> <!-- column with addbook fields-->
+
+            <div class="left-pad-addbook">
+              <div class="red-font">Add Books to the library</div>
+              <div><label class = "blue-font ">Title</label><br><input id ="addbook-title" type="text" size="60"></div>
+              <div><label class = "blue-font ">Author</label><br><input  id ="addbook-author" type="text" size="60"></div>
+              <div><label class = "blue-font ">Pages</label><br><input id ="addbook-pages" type="text" size="60"></div>
+              <div><label class = "blue-font ">Publish-Date</label><br><input id ="addbook-date"  type="text" size="60"></div>
+              <button id ="addbook-button" type="button" name="addbook-button">Add Book</button>
+            </div>
+            <div class="red-font left-pad-addbook top-margin-buttons">
+              <button id = "multiple-books-button" type="button" name="button">Add multiple books</button>
+            </div>
+            <div class="left-pad-addbook" id="multiple-books-table-div" style="display:none">
+              <!--table id = "addbooks-table" class="table-condensed" style="width:50%;" border = "1px;">
+                  <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Pages</th>
+                  <th>Publish<br>date</th>
+                  </tr>
+                <tr>
+                  <td><input id="multiple-input-title1" type="text" size="30"></td>
+                  <td><input id="multiple-input-author1" type="text" size="20"></td>
+                  <td><input id="multiple-input-pages1" type="text" size="4"></td>
+                  <td><input id="multiple-input-publishdate1" type="text" size="4"></td>
+                </tr>
+                <tr>
+                  <td><input id="multiple-input-title2" type="text" size="30"></td>
+                  <td><input id="multiple-input-author2" type="text" size="20"></td>
+                  <td><input id="multiple-input-pages2" type="text" size="4"></td>
+                  <td><input id="multiple-input-publishdate2" type="text" size="4"></td>
+                </tr>
+                <tr>
+                  <td><input id="multiple-input-title3" type="text" size="30"></td>
+                  <td><input id="multiple-input-author3" type="text" size="20"></td>
+                  <td><input id="multiple-input-pages3" type="text" size="4"></td>
+                  <td><input id="multiple-input-publishdate3" type="text" size="4"></td>
+                </tr>
+              </table> -->
+              <button id = "add-multiple-books-button" type="button" name="button">Add books</button>
+
+            </div>
+            <div class="">
+              <button id = "addMore-No-Button" type="button" name="button">NO</button>
+              <button id = "addMore-Yes-Button" type="button" name="button">YES</button>
+            </div>
+            <div class="red-font left-pad-addbook top-margin-buttons">
+              <button id = "list-authors-button" type="button" name="button">Show list of Authors, by name</button>
+            </div>
+            <div class=" well" id="show-authors-table-div" style="display:none">
+              <table id = "show-authors-table" class="table-condensed" style="width:100%;" align="center" border = "1px;">
+                  <tr>
+                  <th>List of Authors</th>
+                  </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+        </div>
+        <div class="col-md-6"><!-- column that shows the library's contents-->
+          <div class="jumbotron">
+            <h2></h2>
+          </div>
+            <h3>Table showing the library's titles</h3>
+            <div class="well">
+              <table id="library-table" class="table-condensed" style="width:100%;" border = "1px;">
+                <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Publish date</th>
+                </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </table>
+            </div><!--div well-->
+        </div>
+      </div><!--4th row-->
+    </div> <!--container-->
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="Dlibrary.js" type="text/javascript"></script>
+  <!--script src="JQueryfile.js" type="text/javascript"></script-->
+  <script>
+    //populateTable();
+    $('.jumbotron').html("<h2></h2>");
+  </script>
 </html>
