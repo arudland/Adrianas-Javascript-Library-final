@@ -358,7 +358,7 @@ Library.prototype.populateTable = function(){
   var tableElements = "<tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
   for (var i = 0;  i < this.books.length; i++) {
     tableElements += "<tr><td>" + this.books[i].title + "</td><td>" + this.books[i].author;
-    tableElements += "</td><td>" + this.books[i].numberOfPages + "</td><td>" + this.books[i].publishDate.toString().substring(0, 10);
+    tableElements += "</td><td>" + this.books[i].numberOfPages + "</td><td>" + this.books[i].publishDate;
     tableElements += "</td></tr>";
   }
   $("#library-table").html(tableElements);
@@ -400,38 +400,44 @@ Library.prototype.anadirUnLibroOMasLibros = function (){//mi logica nueva
 }
 
 var multiRowCount = 1;
+
 //var variousBooksEntry = [];
 Library.prototype.addingRowsAddBooks = function(){
-
-
+  //console.log('adding new row, count  is: '+multiRowCount);
   $("#addbooks-table > tbody:last-child")
-  	.append('<tr><td><input id=\"multiple-input-title' +  ++multiRowCount + '\" size=\"30\" type=\"text\"></td>')
-  	.append('<td><input id=\"multiple-input-author' + multiRowCount + '\" size=\"20\" type=\"text\"></td>')
-  	.append('<td><input id=\"multiple-input-pages' + multiRowCount + '\" size=\"4\" type=\"text\"></td>')
-  	.append('<td><input id=\"multiple-input-publishdate' + multiRowCount + '\" size=\"4\" type=\"text\"></td></tr>');
-    alert('please enter values: ');
-    this.AddBooksMultiple();
-    //the value here is undefined because user has not typed anything?
+  	.append('<tr><td><input id=\"multiple-input-title'  + multiRowCount + '\" size=\"30\" type=\"text\"></td>' +
+  	            '<td><input id=\"multiple-input-author' + multiRowCount + '\" size=\"20\" type=\"text\"></td>' +
+  	            '<td><input id=\"multiple-input-pages'  + multiRowCount + '\" size=\"4\"  type=\"text\"></td>' +
+  	            '<td><input id=\"multiple-input-date'   + multiRowCount + '\" size=\"4\"  type=\"text\"></td></tr>');
 
+  //console.log('adding new row, count is: '+multiRowCount);
+  multiRowCount++;
+  //console.log('adding new row, count is: '+multiRowCount);
+    //alert('please enter values: ');
+    //this.AddBooksMultiple();
+    //the value here is undefined because user has not typed anything?
 }
 Library.prototype.AddBooksMultiple = function(){
   var variousBooksEntry = [];
-  var bookinputs1 = $("#multiple-input-title").text();
-  //var bookinputs1 = 'titleAdriana';
-  var bookinputs2 = $('#multiple-input-author').val();
-  var bookinputs3 = $('#multiple-input-pages').val();
-  var bookinputs4 = $('#multiple-input-date').val();
-  console.log('I am input title: ' + bookinputs1 );
-  var bookAdd = new Book(bookinputs1,bookinputs2,bookinputs3,bookinputs4);
-  //this part in if, for no more books to add, user clicked NO
-  variousBooksEntry.push(bookAdd);
-  //arrayOfValues.push(this.getBooks()[i].title);
-  console.log('I am the array of multiple books title: ' + JSON.stringify(variousBooksEntry));
-
+  for (var i = 0; i<multiRowCount; i++){
+    var bookinputs1 = $('#multiple-input-title'  + i).val();
+    var bookinputs2 = $('#multiple-input-author' + i).val();
+    var bookinputs3 = $('#multiple-input-pages'  + i).val();
+    var bookinputs4 = $('#multiple-input-date'   + i).val();
+    console.log('I am input title: ' + bookinputs1 );
+    var bookAdd = new Book(bookinputs1,bookinputs2,bookinputs3,bookinputs4);
+    //this part in if, for no more books to add, user clicked NO
+    variousBooksEntry.push(bookAdd);
+    //arrayOfValues.push(this.getBooks()[i].title);
+    console.log('I am the array of multiple books title: ' + JSON.stringify(variousBooksEntry));
+  }
+  var booksAddedTrue = this.addBooks(variousBooksEntry);
+  this.populateTable();
+  $('.jumbotron').html("<h2>" + "We added: " + booksAddedTrue +  " books</h2>");
 }
-Library.prototype.addBooksHandler = function(){
+/*Library.prototype.addBooksHandler = function(){
   this.addBooks(variousBooksEntry);
-}
+}*/
 
 Library.prototype.init = function(){
   $("#add-multiple-books-button").hide();
@@ -450,7 +456,7 @@ Library.prototype.init = function(){
   //$('#addMore-Yes-Button').on('click',);
   $('#list-authors-button').on('click', ($.proxy(this.showAuthors, this)));
   $('#addMore-Yes-Button').on('click',($.proxy(this.addingRowsAddBooks, this)));
-  //$('#addMore-No-Button').on('click',($.proxy(this.addBookUser, this)));
+  $('#addMore-No-Button').on('click',($.proxy(this.AddBooksMultiple, this)));
   //$('#addMore-Yes-Button').on('click',this.AddBooksMultiple());
 }
 
