@@ -464,46 +464,24 @@ function startLibrary(libraryInstance){
   var p2 = new Book("the river", "Rudland", 28, new Date(2017, 5, 24));
   var p3 = new Book("the sea", "Colmenares", 67, new Date(2017, 5, 24));
   var pCollection = [p1, p2, p3];
-
   libraryInstance.addBook(p1);
   libraryInstance.addBook(p2);
   libraryInstance.addBook(p3);
-  //
   var bookEntry1 = new Book("the rainbow", "Brothis", 30, new Date(2017, 5, 24));
   var bookEntry2 = new Book("the unicorn", "Rudland", 28, new Date(2017, 5, 24));
   var bookEntry3 = new Book("the sea", "gomez", 67, new Date(2017, 5, 24));
   var variousBooks = [bookEntry1, bookEntry2, bookEntry3];
-
   libraryInstance.addBooks(variousBooks);
   //console.log(JSON.stringify(variousBooks));
-
-  //var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date(2015, 5, 24));
   var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date('03/25/2015'));
-  //var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('2015-03-25'));
   var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('Mar 25 2015'));
-  //var bookEntry21 = new Book("", "Smith", 28, new Date('Mar 25 2015'));
   libraryInstance.addBook(bookEntry11);
   libraryInstance.addBook(bookEntry21);
-  //libraryInstance.addBooks(pCollection);
-
   libraryInstance.removeBookByAuthor('rudland');
-  //console.log("libraryInstance : " + JSON.stringify(libraryInstance.getBooks()));
-
-  //libraryInstance.removeBookByAuthor('smith');
   libraryInstance.removeBookByTitle('the sea');
-  //Testing getBooksByAuthor
-  //console.log(libraryInstance.getBooksByAuthor('f').toString());
   console.log(libraryInstance.getBooksByAuthor('r').toString());
-  //Testing getBookByTitle
-  //console.log(this.getBookByTitle('n').toString());
-
-  //this.getRandomBook();
-  //this.getRandomAuthorName(); //this calls getRandomBook, and will also console.log the book title
-
-  //Testing getAuthors
   console.log("Showing all authors: ");
   libraryInstance.getAuthors();
-
 }
 
 $(document).ready(function(){
