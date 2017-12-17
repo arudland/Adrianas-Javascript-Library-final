@@ -13,7 +13,6 @@ function Library(){
   };
 }
 
-var newLibrary = new Library();
 // getBooks function uses single instance of Library, and returns its books
 Library.prototype.getBooks = function() {
   return this.books;
@@ -21,15 +20,15 @@ Library.prototype.getBooks = function() {
 }
 // book constructur/prototype
 var Book = function(title, author, numberOfPages, publishDate){
-  /*if (!newLibrary.validateString(title)){
+  /*if (!this.validateString(title)){
     console.log("Invalid Title");
     alert("Invalid Title");
   }
-  if (!newLibrary.validateString(author)){
+  if (!this.validateString(author)){
     console.log("Invalid author");
     alert("Invalid author");
   }
-  if (!newLibrary.validateNumber(numberOfPages)){
+  if (!this.validateNumber(numberOfPages)){
     console.log("Invalid pages number");
     alert("Invalid pages number");
   }*/
@@ -38,6 +37,25 @@ var Book = function(title, author, numberOfPages, publishDate){
   this.numberOfPages = numberOfPages;
   this.publishDate = publishDate;
 };
+
+Book.prototype.validateString = function (value){
+  if (value == null || typeof(value) === "undefined" || value.length == 0){
+    console.log("Invalid entry on validateString");
+    alert('Invalid entry');
+    return false;
+  }else{
+    return true;
+  }
+}
+
+Book.prototype.validateNumber = function (value){
+  if (!this.validateString(value)){
+    alert('Invalid entry');
+    return false;
+  }else{
+    return !isNaN(parseInt(value));
+  }
+}
 
 // Start of webstorage function,  newLibrary.webstorageStore();
 Library.prototype.webstorageStore = function (){
@@ -90,6 +108,10 @@ Library.prototype.addBook = function(addingBook){
   if (!this.validateNumber(addingBook.numberOfPages)){
     return false;
   }
+  if (!this.validateDate(addingBook.publishDate)){
+    return false;
+  }
+
   console.log(this.searchBook(addingBook.title,addingBook.author));
   if (this.searchBook(addingBook.title,addingBook.author) === false){
     this.getBooks().push(addingBook);
@@ -180,7 +202,7 @@ Library.prototype.getByMultipleAttribute = function(attr, searchString){
 }
 
 Library.prototype.validateString = function (value){
-  if (value == null || typeof(value) === "undefined" || value.length == 0){
+  if (value == null || typeof(value) === "undefined" || value.length == 0 || value.trim().length == 0){
     console.log("Invalid entry on validateString");
     alert('Invalid entry');
     return false;
@@ -197,6 +219,15 @@ Library.prototype.validateNumber = function (value){
     return !isNaN(parseInt(value));
   }
 }
+Library.prototype.validateDate = function (value){
+  if (!this.validateString(value)){
+    alert('Invalid entry');
+    return false;
+  }else{
+    return true;
+  }
+}
+
 
 Library.prototype.getByAttribute = function(attr, searchString){
   var arrayOfValues = [];
@@ -237,52 +268,6 @@ Library.prototype.getAuthors = function (){
     return authors;
 }
 
-
-//testing of addBook and addbooks, etc
-var p1 = new Book("the sun", "Brothis", 30 , new Date(2017, 5, 24));
-var p2 = new Book("the river", "Rudland", 28, new Date(2017, 5, 24));
-var p3 = new Book("the sea", "Colmenares", 67, new Date(2017, 5, 24));
-var pCollection = [p1, p2, p3];
-
-newLibrary.addBook(p1);
-newLibrary.addBook(p2);
-newLibrary.addBook(p3);
-//
-var bookEntry1 = new Book("the rainbow", "Brothis", 30, new Date(2017, 5, 24));
-var bookEntry2 = new Book("the unicorn", "Rudland", 28, new Date(2017, 5, 24));
-var bookEntry3 = new Book("the sea", "gomez", 67, new Date(2017, 5, 24));
-var variousBooks = [bookEntry1, bookEntry2, bookEntry3];
-
-newLibrary.addBooks(variousBooks);
-//console.log(JSON.stringify(variousBooks));
-
-//var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date(2015, 5, 24));
-var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date('03/25/2015'));
-//var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('2015-03-25'));
-var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('Mar 25 2015'));
-//var bookEntry21 = new Book("", "Smith", 28, new Date('Mar 25 2015'));
-newLibrary.addBook(bookEntry11);
-newLibrary.addBook(bookEntry21);
-//newLibrary.addBooks(pCollection);
-
-newLibrary.removeBookByAuthor('rudland');
-//console.log("newLibrary : " + JSON.stringify(newLibrary.getBooks()));
-
-//newLibrary.removeBookByAuthor('smith');
-newLibrary.removeBookByTitle('the sea');
-//Testing getBooksByAuthor
-//console.log(newLibrary.getBooksByAuthor('f').toString());
-console.log(newLibrary.getBooksByAuthor('r').toString());
-//Testing getBookByTitle
-//console.log(this.getBookByTitle('n').toString());
-
-//this.getRandomBook();
-//this.getRandomAuthorName(); //this calls getRandomBook, and will also console.log the book title
-
-//Testing getAuthors
-console.log("Showing all authors: ");
-newLibrary.getAuthors();
-
 //************
 
 //************
@@ -290,20 +275,32 @@ newLibrary.getAuthors();
 Library.prototype.displayBookByTitle = function(){
   console.log('I got to the function fine.....');
   var bookinput = $('#get-book-by-input').val();
-  console.log('test of book: ' + JSON.stringify(bookinput));
-  var book = this.getBookByTitle(bookinput);
-  /*$('#getbook-button-title').val('');esto fue lo que anadi*/
-  console.log('test of book: ' + JSON.stringify(book));
-  $('#get-book-by-input').val(book.toString());
-  $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+  if (bookinput!=''){
+    bookinput = bookinput.trim();
+    console.log('test of book: ' + JSON.stringify(bookinput));
+    var book = this.getBookByTitle(bookinput);
+    /*$('#getbook-button-title').val('');esto fue lo que anadi*/
+    console.log('test of book: ' + JSON.stringify(book));
+    //$('#get-book-by-input').val(book.toString());
+    $('#get-book-by-input').val('');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+  }else{
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + "</h2>");
+  }
 }
 Library.prototype.displayBookByAuthor = function(){
   var bookinput = $('#get-book-by-input').val();
-  console.log('test of book: ' + JSON.stringify(bookinput));
-  var book = this.getBooksByAuthor(bookinput);
-  console.log('test of book: ' + JSON.stringify(book));
-  $('#get-book-by-input').val(book.toString());
-  $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+  if (bookinput!=''){
+    bookinput = bookinput.trim();
+    console.log('test of book: ' + JSON.stringify(bookinput));
+    var book = this.getBooksByAuthor(bookinput);
+    console.log('test of book: ' + JSON.stringify(book));
+    //$('#get-book-by-input').val(book.toString());
+    $('#get-book-by-input').val('');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+  }else{
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + "</h2>");
+  }
 }
 Library.prototype.displayRandomBook = function(){
   var book = this.getRandomBook();//
@@ -316,17 +313,29 @@ Library.prototype.displayRandomAuthor = function(){
 }
 Library.prototype.remBookByAuthor = function(){
   var bookinput = $('#remove-book').val();
-  console.log('remBookByAuthor: ' + bookinput);
-  var result = this.removeBookByAuthor(bookinput);
-  $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed books by this author: " + (result?bookinput:'') + "</h2>");
-  this.populateTable();
+  if (bookinput!=''){
+    bookinput = bookinput.trim();
+    console.log('remBookByAuthor: ' + bookinput);
+    var result = this.removeBookByAuthor(bookinput);
+    $('#remove-book').val('');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed books by this author: " + (result?bookinput:'') + "</h2>");
+    this.populateTable();
+  }else{
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed books by this author: " + "</h2>");
+  }
 }
 Library.prototype.remBookByTitle = function(){
   var bookinput = $('#remove-book').val();
-  console.log('remBookByTitle: ' + bookinput);
-  var result = this.removeBookByTitle(bookinput);
-  $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed this book: " + (result?bookinput:'') + "</h2>");
-  this.populateTable();
+  if (bookinput!=''){
+    bookinput = bookinput.trim();
+    console.log('remBookByTitle: ' + bookinput);
+    var result = this.removeBookByTitle(bookinput);
+    $('#remove-book').val('');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed this book: " + (result?bookinput:'') + "</h2>");
+    this.populateTable();
+  }else{
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed this book: " + "</h2>");
+  }
 };
 Library.prototype.addBookUser = function(){
   var bookinput1 = $('#addbook-title').val();
@@ -336,6 +345,10 @@ Library.prototype.addBookUser = function(){
   var bookAdd = new Book(bookinput1,bookinput2,bookinput3,bookinput4);
   var addBookvalue = this.addBook(bookAdd);
   this.populateTable();
+  $('#addbook-title').val('');
+  $('#addbook-author').val('');
+  $('#addbook-pages').val(null);
+  $('#addbook-date').val(null);
   $('.jumbotron').html("<h2 class=\"blue-font\">" + (addBookvalue?'Books successfully added':'Failed to add book') + "</h2>");
 }
 Library.prototype.populateTable = function(){
@@ -349,10 +362,6 @@ Library.prototype.populateTable = function(){
   $("#library-table").html(tableElements);
 }
 Library.prototype.showAddMultipleBooks = function(){
-  /*$('#multiple-books-table-div').show();
-  $("#add-multiple-books-label").show();
-  $("#addMore-No-Button").show();
-  $("#addMore-Yes-Button").show();*/
   var addBooksDiv = $('#multiple-books-table-div');
   if (addBooksDiv.css("display") == "none"){
     addBooksDiv.css("display", "block");
@@ -361,9 +370,6 @@ Library.prototype.showAddMultipleBooks = function(){
     $("#addMore-Yes-Button").show();
   }else{
     addBooksDiv.css("display", "none");
-    /*$("#add-multiple-books-label").hide();
-    $("#addMore-No-Button").hide();
-    $("#addMore-Yes-Button").hide();*/
   }
 }
 
@@ -387,20 +393,21 @@ var multiRowCount = 1;
 
 Library.prototype.addingRowsAddBooks = function(){
   $("#addbooks-table > tbody:last-child")
-  	.append('<tr><td><input id=\"multiple-input-title'  + multiRowCount + '\" size=\"25\" type=\"text\"></td>' +
-  	            '<td><input id=\"multiple-input-author' + multiRowCount + '\" size=\"15\" type=\"text\"></td>' +
-  	            '<td><input id=\"multiple-input-pages'  + multiRowCount + '\" size=\"4\"  type=\"number\"></td>' +
+  	.append('<tr><td><input id=\"multiple-input-title'  + multiRowCount + '\" size=\"30\" type=\"text\"></td>' +
+  	            '<td><input id=\"multiple-input-author' + multiRowCount + '\" size=\"20\" type=\"text\"></td>' +
+  	            '<td><input id=\"multiple-input-pages'  + multiRowCount + '\" size=\"3\"  type=\"number\"></td>' +
   	            '<td><input id=\"multiple-input-date'   + multiRowCount + '\" size=\"10\"  type=\"date\"></td></tr>');
   multiRowCount++;
 }
 Library.prototype.emptyMultipleBooksTable = function(){
-  var tableElements = "<tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
-  tableElements += "<tr><td><input id=\"multiple-input-title0\" size=\"25\" type=\"text\"></td>";
-  tableElements += "<td><input id=\"multiple-input-author0\" size=\"15\" type=\"text\"></td>";
-  tableElements += "<td><input id=\"multiple-input-pages0\" size=\"4\"  type=\"number\"></td>";
-  tableElements += "<td><input id=\"multiple-input-date0\" size=\"10\"  type=\"date\"></td></tr>";
+  var tableElements = "<tbody><tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
+  tableElements += "<tr><td><input id=\"multiple-input-title0\" size=\"30\" type=\"text\"></td>";
+  tableElements += "<td><input id=\"multiple-input-author0\" size=\"20\" type=\"text\"></td>";
+  tableElements += "<td><input id=\"multiple-input-pages0\" size=\"3\"  type=\"number\"></td>";
+  tableElements += "<td><input id=\"multiple-input-date0\" size=\"10\"  type=\"date\"></td></tr></tbody>";
+  multiRowCount = 1;
   $("#addbooks-table").html(tableElements);
-  $("#addbooks-table").addClass("table-condensed well");
+  //$("#addbooks-table").addClass("table-condensed well");
 
 }
 
@@ -422,19 +429,12 @@ Library.prototype.AddBooksMultiple = function(){
   this.populateTable();
   $('.jumbotron').html("<h2 class=\"blue-font\">" + "We added: " + booksAddedTrue +  " books</h2>");
   this.emptyMultipleBooksTable();
-  //$("#addbooks-table").hide();
-  //$("add-multiple-books-label").hide();
-//  $("addMore-No-Button").hide();
-//  $("addMore-Yes-Button").hide();
+  //this.showAddMultipleBooks();
+  var addBooksDiv = $('#multiple-books-table-div');
+  addBooksDiv.css("display", "none");
 }
 
-Library.prototype.init = function(){
-  $("#add-multiple-books-label").hide();
-  $("#addMore-No-Button").hide();
-  $("#addMore-Yes-Button").hide();
-  //$('#multiple-books-table-div').hide();
-  $('.jumbotron').html("<h2 class=\"blue-font\">Keep Tunned For Our Library Updates</h2>");
-  newLibrary.populateTable();
+Library.prototype.bindEvents = function(){
   $('#getbook-button-title').on('click',($.proxy(this.displayBookByTitle, this)));
   $('#getbook-button-author').on('click', ($.proxy(this.displayBookByAuthor, this)));
   $('#remove-button-title').on('click', ($.proxy(this.remBookByTitle, this)));
@@ -449,8 +449,67 @@ Library.prototype.init = function(){
   $('#addMore-No-Button').on('click',($.proxy(this.AddBooksMultiple, this)));
 }
 
+Library.prototype.init = function(){
+  $("#add-multiple-books-label").hide();
+  $("#addMore-No-Button").hide();
+  $("#addMore-Yes-Button").hide();
+  //$('#multiple-books-table-div').hide();
+  $('.jumbotron').html("<h2 class=\"blue-font\">Stay Tuned For Our Library Updates</h2>");
+  this.populateTable();
+}
+
+function startLibrary(libraryInstance){
+  //testing of addBook and addbooks, etc
+  var p1 = new Book("the sun", "Brothis", 30 , new Date(2017, 5, 24));
+  var p2 = new Book("the river", "Rudland", 28, new Date(2017, 5, 24));
+  var p3 = new Book("the sea", "Colmenares", 67, new Date(2017, 5, 24));
+  var pCollection = [p1, p2, p3];
+
+  libraryInstance.addBook(p1);
+  libraryInstance.addBook(p2);
+  libraryInstance.addBook(p3);
+  //
+  var bookEntry1 = new Book("the rainbow", "Brothis", 30, new Date(2017, 5, 24));
+  var bookEntry2 = new Book("the unicorn", "Rudland", 28, new Date(2017, 5, 24));
+  var bookEntry3 = new Book("the sea", "gomez", 67, new Date(2017, 5, 24));
+  var variousBooks = [bookEntry1, bookEntry2, bookEntry3];
+
+  libraryInstance.addBooks(variousBooks);
+  //console.log(JSON.stringify(variousBooks));
+
+  //var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date(2015, 5, 24));
+  var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date('03/25/2015'));
+  //var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('2015-03-25'));
+  var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('Mar 25 2015'));
+  //var bookEntry21 = new Book("", "Smith", 28, new Date('Mar 25 2015'));
+  libraryInstance.addBook(bookEntry11);
+  libraryInstance.addBook(bookEntry21);
+  //libraryInstance.addBooks(pCollection);
+
+  libraryInstance.removeBookByAuthor('rudland');
+  //console.log("libraryInstance : " + JSON.stringify(libraryInstance.getBooks()));
+
+  //libraryInstance.removeBookByAuthor('smith');
+  libraryInstance.removeBookByTitle('the sea');
+  //Testing getBooksByAuthor
+  //console.log(libraryInstance.getBooksByAuthor('f').toString());
+  console.log(libraryInstance.getBooksByAuthor('r').toString());
+  //Testing getBookByTitle
+  //console.log(this.getBookByTitle('n').toString());
+
+  //this.getRandomBook();
+  //this.getRandomAuthorName(); //this calls getRandomBook, and will also console.log the book title
+
+  //Testing getAuthors
+  console.log("Showing all authors: ");
+  libraryInstance.getAuthors();
+
+}
+
 $(document).ready(function(){
   //newLibrary.populateTable();
+  var newLibrary = new Library();
   newLibrary.init();
-
+  newLibrary.bindEvents();
+  startLibrary(newLibrary);
 }); //end of document ready

@@ -40,6 +40,30 @@
             <button type="button" id="Random-button-author" class="top-margin-buttons button-round" name="Random-button2">Random book by author</button>
           </div>
         </div><!-- 2nd row -->
+        <div class="row margin-left-column">
+          <div class="red-font left-pad-addbook top-margin-buttons">
+            <button id = "multiple-books-button" class="orange-text-color" type="button" name="button" title='Press to show/hide multiple book entry'>Add multiple books</button>
+          </div>
+          <div class="left-pad-addbook" id="multiple-books-table-div" style="display:none"> <!--style="display:none"-->
+            <table id ="addbooks-table" class="table-condensed well" style="width:50%;">
+                <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Publish<br>date</th>
+                </tr>
+              <tr>
+                <td><input id="multiple-input-title0" type="text" size="30"></td>
+                <td><input id="multiple-input-author0" type="text" size="20"></td>
+                <td><input id="multiple-input-pages0" type="number" size="3"></td>
+                <td><input id="multiple-input-date0" type="date" size="10"></td><!--size="4"-->
+              </tr>
+            </table>
+            <label id = "add-multiple-books-label" >Add another book?</label>
+            <button id = "addMore-No-Button" type="button" name="button" title="This will save all books">NO</button>
+            <button id = "addMore-Yes-Button" type="button" name="button" title="Continue to add books">YES</button>
+          </div>
+        </div>
       <!--/div><old container-->
         <div class="row top-margin"> <!--4thd row-->
           <div class="col-md-6"> <!-- column with addbook fields-->
@@ -50,29 +74,6 @@
               <div><label class = "blue-font margin-left-column">Pages</label><br><input id ="addbook-pages" class="margin-left-column" type="number" size="60"></div>
               <div><label class = "blue-font margin-left-column">Publish-Date</label><br><input id ="addbook-date"  class="margin-left-column" type="date" size="60"></div>
               <button id ="addbook-button" class="margin-left-column top-margin-buttons orange-text-color" type="button" name="addbook-button">Add Book</button>
-            </div>
-            <div class="red-font left-pad-addbook top-margin-buttons">
-              <button id = "multiple-books-button" class="orange-text-color" type="button" name="button">Add multiple books</button>
-            </div>
-            <div class="left-pad-addbook" id="multiple-books-table-div" style="display:none"> <!--style="display:none"-->
-              <table id ="addbooks-table" class="table-condensed well" style="width:50%;">
-                  <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Pages</th>
-                  <th>Publish<br>date</th>
-                  </tr>
-                <tr>
-                  <td><input id="multiple-input-title0" type="text" size="10"></td>
-                  <td><input id="multiple-input-author0" type="text" size="10"></td>
-                  <td><input id="multiple-input-pages0" type="number" size="1"></td>
-                  <td><input id="multiple-input-date0" type="date" size="10"></td><!--size="4"-->
-                </tr>
-              </table>
-              <label id = "add-multiple-books-label" >Add another book?</label>
-              <button id = "addMore-No-Button" type="button" name="button" title="This will save all books">NO</button>
-              <button id = "addMore-Yes-Button" type="button" name="button" title="Continue to add books">YES</button>
-
             </div>
             <div class="red-font left-pad-addbook top-margin-buttons">
               <button id="list-authors-button" type="button" class="orange-text-color" name="button">Show list of Authors, by name</button>
@@ -114,12 +115,12 @@
     </div> <!--container-->
   </body>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <script src="Dlibrary.js" type="text/javascript"></script>
-  <!--script src="JQueryfile.js" type="text/javascript"></script-->
   <script>
-    //populateTable();
-    $('.jumbotron').html("<h2>Library updates</h2>");
+    //$('.jumbotron').html("<h2>Library updates</h2>");
   </script>
 </html>
