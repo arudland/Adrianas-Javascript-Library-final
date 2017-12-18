@@ -41,7 +41,8 @@ var Book = function(title, author, numberOfPages, publishDate){
 Book.prototype.validateString = function (value){
   if (value == null || typeof(value) === "undefined" || value.length == 0){
     console.log("Invalid entry on validateString");
-    alert('Invalid entry');
+    alert('Invalid entry or field left empty');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
     return true;
@@ -50,7 +51,8 @@ Book.prototype.validateString = function (value){
 
 Book.prototype.validateNumber = function (value){
   if (!this.validateString(value)){
-    alert('Invalid entry');
+    alert('Invalid number or field left empty');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
     return !isNaN(parseInt(value));
@@ -204,7 +206,8 @@ Library.prototype.getByMultipleAttribute = function(attr, searchString){
 Library.prototype.validateString = function (value){
   if (value == null || typeof(value) === "undefined" || value.length == 0 || value.trim().length == 0){
     console.log("Invalid entry on validateString");
-    alert('Invalid entry');
+    alert('Invalid entry or field left empty');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
     return true;
@@ -213,7 +216,8 @@ Library.prototype.validateString = function (value){
 
 Library.prototype.validateNumber = function (value){
   if (!this.validateString(value)){
-    alert('Invalid entry');
+    alert('Invalid entry or field left empty');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
     return !isNaN(parseInt(value));
@@ -221,7 +225,8 @@ Library.prototype.validateNumber = function (value){
 }
 Library.prototype.validateDate = function (value){
   if (!this.validateString(value)){
-    alert('Invalid entry');
+    alert('Invalid entry or field left empty');
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
     return true;
@@ -407,8 +412,6 @@ Library.prototype.emptyMultipleBooksTable = function(){
   tableElements += "<td><input id=\"multiple-input-date0\" size=\"10\"  type=\"date\"></td></tr></tbody>";
   multiRowCount = 1;
   $("#addbooks-table").html(tableElements);
-  //$("#addbooks-table").addClass("table-condensed well");
-
 }
 
 Library.prototype.AddBooksMultiple = function(){
@@ -443,7 +446,6 @@ Library.prototype.bindEvents = function(){
   $('#Random-button-author').on('click', ($.proxy(this.displayRandomAuthor, this)));
   $('#addbook-button').on('click', ($.proxy(this.addBookUser, this)));
   $('#multiple-books-button').on('click', ($.proxy(this.showAddMultipleBooks, this)));
-  //$('#add-multiple-books-label').on('click', ($.proxy(this.addMultipleBooks, this)));
   $('#list-authors-button').on('click', ($.proxy(this.showAuthors, this)));
   $('#addMore-Yes-Button').on('click',($.proxy(this.addingRowsAddBooks, this)));
   $('#addMore-No-Button').on('click',($.proxy(this.AddBooksMultiple, this)));

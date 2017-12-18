@@ -1,3 +1,9 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .red-border{
   border: 5px solid red;
 }
@@ -87,6 +93,14 @@
     margin-right:auto;
     width: 400 px;
 }
+.center-Div-add-one-book
+{
+    margin-left:auto;
+    margin-right:auto;
+    width: 500 px;
+}
+
 .well-background-color{
-background-color: rgb(217, 214, 78);
+/*background-color: rgb(217, 214, 78);*/
+background-color: rgb(110, 183, 190)
 }
