@@ -204,7 +204,8 @@ Library.prototype.getByMultipleAttribute = function(attr, searchString){
 }
 
 Library.prototype.validateString = function (value){
-  if (value == null || typeof(value) === "undefined" || value.length == 0 || value.trim().length == 0){
+  // || value.trim().length == 0
+  if (value == null || typeof(value) === "undefined" || value.length == 0){
     console.log("Invalid entry on validateString");
     alert('Invalid entry or field left empty');
     $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
@@ -278,15 +279,12 @@ Library.prototype.getAuthors = function (){
 //************
 /* Jquery function handlers */
 Library.prototype.displayBookByTitle = function(){
-  console.log('I got to the function fine.....');
   var bookinput = $('#get-book-by-input').val();
   if (bookinput!=''){
     bookinput = bookinput.trim();
     console.log('test of book: ' + JSON.stringify(bookinput));
     var book = this.getBookByTitle(bookinput);
-    /*$('#getbook-button-title').val('');esto fue lo que anadi*/
     console.log('test of book: ' + JSON.stringify(book));
-    //$('#get-book-by-input').val(book.toString());
     $('#get-book-by-input').val('');
     $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
   }else{
