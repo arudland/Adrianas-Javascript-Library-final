@@ -438,20 +438,31 @@ Library.prototype.AddBooksMultiple = function(){
 }
 
 Library.prototype.bindEvents = function(){
-  $('#getbook-button-title').on('click',($.proxy(this.displayBookByTitle, this)));
-  $('#getbook-button-author').on('click', ($.proxy(this.displayBookByAuthor, this)));
-  $('#remove-button-title').on('click', ($.proxy(this.remBookByTitle, this)));
-  $('#remove-button-author').on('click', ($.proxy(this.remBookByAuthor, this)));
-  $('#Random-button-title').on('click', ($.proxy(this.displayRandomBook, this)));
-  $('#Random-button-author').on('click', ($.proxy(this.displayRandomAuthor, this)));
-  $('#addbook-button').on('click', ($.proxy(this.addBookUser, this)));
-  $('#multiple-books-button').on('click', ($.proxy(this.showAddMultipleBooks, this)));
-  $('#list-authors-button').on('click', ($.proxy(this.showAuthors, this)));
-  $('#addMore-Yes-Button').on('click',($.proxy(this.addingRowsAddBooks, this)));
-  $('#addMore-No-Button').on('click',($.proxy(this.AddBooksMultiple, this)));
+  this.$getbookbuttontitle1.on('click',($.proxy(this.displayBookByTitle, this)));
+  this.$getbookbuttonauthor1.on('click', ($.proxy(this.displayBookByAuthor, this)));
+  this.$removebuttontitle1.on('click', ($.proxy(this.remBookByTitle, this)));
+  this.$removebuttonauthor1.on('click', ($.proxy(this.remBookByAuthor, this)));
+  this.$Randombuttontitle1.on('click', ($.proxy(this.displayRandomBook, this)));
+  this.$Randombuttonauthor1.on('click', ($.proxy(this.displayRandomAuthor, this)));
+  this.$addbookbutton1.on('click', ($.proxy(this.addBookUser, this)));
+  this.$multiplebooksbutton1.on('click', ($.proxy(this.showAddMultipleBooks, this)));
+  this.$listauthorsbutton1.on('click', ($.proxy(this.showAuthors, this)));
+  this.$addMoreYesButton1.on('click',($.proxy(this.addingRowsAddBooks, this)));
+  this.$addMoreNoButton1.on('click',($.proxy(this.AddBooksMultiple, this)));
 }
 
 Library.prototype.init = function(){
+  this.$getbookbuttontitle1 = $('#getbook-button-title');
+  this.$getbookbuttonauthor1 = $('#getbook-button-author');
+  this.$removebuttontitle1 = $('#remove-button-title');
+  this.$removebuttonauthor1 = $('#remove-button-author');
+  this.$Randombuttontitle1 = $('#Random-button-title');
+  this.$Randombuttonauthor1 = $('#Random-button-author');
+  this.$addbookbutton1 = $('#addbook-button');
+  this.$multiplebooksbutton1 = $('#multiple-books-button');
+  this.$listauthorsbutton1 = $('#list-authors-button');
+  this.$addMoreYesButton1 = $('#addMore-Yes-Button');
+  this.$addMoreNoButton1 = $('#addMore-No-Button');
   $("#add-multiple-books-label").hide();
   $("#addMore-No-Button").hide();
   $("#addMore-Yes-Button").hide();
