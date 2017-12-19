@@ -1,6 +1,6 @@
 function Library(){
   this.books =[];
-  if (typeof(Storage) !== "undefined") {
+/*  if (typeof(Storage) !== "undefined") {
       //console.log('Yey! there is Web Storage support..');
       // Retrieve
       var testStorage = JSON.parse(localStorage.getItem("myLibrary"));
@@ -10,7 +10,7 @@ function Library(){
       } else {
         localStorage.setItem("myLibrary", JSON.stringify(this.books));
       }
-  };
+  };*/
 }
 
 // getBooks function uses single instance of Library, and returns its books
@@ -114,7 +114,7 @@ Library.prototype.addBook = function(addingBook){
     return false;
   }
 
-  console.log(this.searchBook(addingBook.title,addingBook.author));
+  console.log('addBook - Searching for book ' + addingBook.title + ' returned :' + this.searchBook(addingBook.title,addingBook.author));
   if (this.searchBook(addingBook.title,addingBook.author) === false){
     this.getBooks().push(addingBook);
     console.log(JSON.stringify(this.books));
@@ -455,22 +455,22 @@ Library.prototype.bindEvents = function(){
   this.$addMoreYesButton1.on('click',($.proxy(this.addingRowsAddBooks, this)));
   this.$addMoreNoButton1.on('click',($.proxy(this.AddBooksMultiple, this)));
 }
-/*Library.prototype.webStorageInit = function(){
+Library.prototype.webStorageInit = function(){
   if (typeof(Storage) !== "undefined") {
       //console.log('Yey! there is Web Storage support..');
       // Retrieve
       var testStorage = JSON.parse(localStorage.getItem("myLibrary"));
       //alert('this is testStorage: ' + JSON.stringify(testStorage));
-      //console.log('this is testStorage: ' + JSON.stringify(testStorage));
+      console.log('this is testStorage: ' + JSON.stringify(testStorage));
       if (typeof(testStorage) !== "undefined" && testStorage != null) {
-        alert('this is testStorage: ' + JSON.stringify(testStorage));
+        //alert('this is testStorage: ' + JSON.stringify(testStorage));
         this.books = testStorage;
       } else {
-        //localStorage.setItem("myLibrary", JSON.stringify(this.books));
-        localStorage.setItem("myLibrary", JSON.stringify(this.getBooks()));
+        localStorage.setItem("myLibrary", JSON.stringify(this.books));
+        //localStorage.setItem("myLibrary", JSON.stringify(this.getBooks()));
       }
   };
-}*/
+}
 
 Library.prototype.init = function(){
   this.$getbookbuttontitle1 = $('#getbook-button-title');
@@ -488,7 +488,7 @@ Library.prototype.init = function(){
   $("#addMore-No-Button").hide();
   $("#addMore-Yes-Button").hide();
   $('.jumbotron').html("<h2 class=\"blue-font\">Stay Tuned For Our Library Updates</h2>");
-  //this.webStorageInit();
+  this.webStorageInit();
   this.populateTable();
 }
 
@@ -524,4 +524,6 @@ $(document).ready(function(){
   newLibrary.init();
   newLibrary.bindEvents();
   startLibrary(newLibrary);
+  newLibrary.webstorageStore();
+  newLibrary.populateTable();
 }); //end of document ready
