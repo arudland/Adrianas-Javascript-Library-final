@@ -204,7 +204,8 @@ Library.prototype.getByMultipleAttribute = function(attr, searchString){
 }
 
 Library.prototype.validateString = function (value){
-  if (value == null || typeof(value) === "undefined" || value.length == 0 || value.trim().length == 0){
+  // || value.trim().length == 0
+  if (value == null || typeof(value) === "undefined" || value.length == 0){
     console.log("Invalid entry on validateString");
     alert('Invalid entry or field left empty');
     $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
@@ -358,12 +359,15 @@ Library.prototype.addBookUser = function(){
 }
 Library.prototype.populateTable = function(){
   //var libTable = $('library-table').val();// WHat happens if table doesn't exist? document.getElementById('library-table');
-  var tableElements = "<tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
+  //alert('this is the lenght of the array of books: ' + this.books.length);
+  var tableElements = "<tbody><tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
   for (var i = 0;  i < this.books.length; i++) {
     tableElements += "<tr><td>" + this.books[i].title + "</td><td>" + this.books[i].author;
     tableElements += "</td><td>" + this.books[i].numberOfPages + "</td><td>" + this.books[i].publishDate.toString().substring(0,10);
     tableElements += "</td></tr>";
   }
+  tableElements += "</tbody>";
+
   $("#library-table").html(tableElements);
 }
 Library.prototype.showAddMultipleBooks = function(){
@@ -383,12 +387,13 @@ Library.prototype.showAddMultipleBooks = function(){
   if (authorsDiv.css("display") == "none"){
     authorsDiv.css("display", "block");
     var arrayAuthors = this.getAuthors();
-    var tableElements = "<tr><th>Author</th></tr>";
+    var tableElements = "<tbody><tr><th>Author</th></tr>";
     for (var i = 0;  i < arrayAuthors.length; i++) {
       tableElements += "<tr><td>" + arrayAuthors[i];
       tableElements += "</td></tr>";
     }
-    $("#show-authors-table-div").html(tableElements);
+    tableElements += "</tbody>";
+    $("#show-authors-table").html(tableElements);
   }else{
     authorsDiv.css("display", "none");
   }
@@ -450,6 +455,22 @@ Library.prototype.bindEvents = function(){
   this.$addMoreYesButton1.on('click',($.proxy(this.addingRowsAddBooks, this)));
   this.$addMoreNoButton1.on('click',($.proxy(this.AddBooksMultiple, this)));
 }
+/*Library.prototype.webStorageInit = function(){
+  if (typeof(Storage) !== "undefined") {
+      //console.log('Yey! there is Web Storage support..');
+      // Retrieve
+      var testStorage = JSON.parse(localStorage.getItem("myLibrary"));
+      //alert('this is testStorage: ' + JSON.stringify(testStorage));
+      //console.log('this is testStorage: ' + JSON.stringify(testStorage));
+      if (typeof(testStorage) !== "undefined" && testStorage != null) {
+        alert('this is testStorage: ' + JSON.stringify(testStorage));
+        this.books = testStorage;
+      } else {
+        //localStorage.setItem("myLibrary", JSON.stringify(this.books));
+        localStorage.setItem("myLibrary", JSON.stringify(this.getBooks()));
+      }
+  };
+}*/
 
 Library.prototype.init = function(){
   this.$getbookbuttontitle1 = $('#getbook-button-title');
@@ -466,8 +487,8 @@ Library.prototype.init = function(){
   $("#add-multiple-books-label").hide();
   $("#addMore-No-Button").hide();
   $("#addMore-Yes-Button").hide();
-  //$('#multiple-books-table-div').hide();
   $('.jumbotron').html("<h2 class=\"blue-font\">Stay Tuned For Our Library Updates</h2>");
+  //this.webStorageInit();
   this.populateTable();
 }
 
@@ -494,7 +515,7 @@ function startLibrary(libraryInstance){
   libraryInstance.removeBookByTitle('the sea');
   console.log(libraryInstance.getBooksByAuthor('r').toString());
   console.log("Showing all authors: ");
-  libraryInstance.getAuthors();
+  //libraryInstance.getAuthors();
 }
 
 $(document).ready(function(){
