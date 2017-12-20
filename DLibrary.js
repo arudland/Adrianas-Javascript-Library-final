@@ -314,6 +314,7 @@ Library.prototype.addBookUser = function(){
   var bookinput3 = parseInt($('#addbook-pages').val().trim());
   //var bookinput3 = $('#addbook-pages').val();
   var bookinput4 = $('#addbook-date').val();
+  //$('#addbook-date').datepicker("option", "disabled", true);
   var bookAdd = new Book(bookinput1,bookinput2,bookinput3,bookinput4);
   var addBookvalue = this.addBook(bookAdd);
   this.populateTable();
@@ -394,7 +395,8 @@ Library.prototype.AddBooksMultiple = function(){
   for (var i = 0; i<multiRowCount; i++){
     var bookinputs1 = $('#multiple-input-title'  + i).val().trim();
     var bookinputs2 = $('#multiple-input-author' + i).val().trim();
-    var bookinputs3 = $('#multiple-input-pages'  + i).val();
+    //var bookinputs3 = $('#multiple-input-pages'  + i).val();
+    var bookinputs3 = parseInt($('#multiple-input-pages' + i).val().trim());
     var bookinputs4 = $('#multiple-input-date'   + i).val();
     var bookAdd = new Book(bookinputs1,bookinputs2,bookinputs3,bookinputs4);
     //this part in if, for no more books to add, user clicked NO
