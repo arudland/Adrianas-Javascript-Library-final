@@ -1,7 +1,6 @@
 function Library(){
   this.books =[];
 }
-
 // getBooks function uses single instance of Library, and returns its books
 Library.prototype.getBooks = function() {
   return this.books;
@@ -17,7 +16,7 @@ var Book = function(title, author, numberOfPages, publishDate){
 Book.prototype.validateString = function (value){
   if (value == null || typeof(value) === "undefined" || value.length == 0){
     console.log("Invalid entry on validateString");
-    alert('Invalid entry or field left empty');
+    //alert('Invalid entry or field left empty');
     $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
@@ -38,7 +37,6 @@ Book.prototype.validateNumber = function (value){
 Library.prototype.webstorageStore = function (){
   if (typeof(Storage) !== "undefined") {
       console.log('Yey! there is Web Storage support..');
-      // Store
       localStorage.setItem("myLibrary", JSON.stringify(this.getBooks()));
   } else {
       console.log('Sorry! No Web Storage support..');
@@ -47,7 +45,6 @@ Library.prototype.webstorageStore = function (){
 
 Library.prototype.webstorageRetrieve = function (){
   if (typeof(Storage) !== "undefined") {
-      // Retrieve
       var testStorage = JSON.parse(localStorage.getItem("myLibrary"));
   } else {
       console.log('Sorry! No Web Storage support..');
@@ -132,9 +129,7 @@ Library.prototype.removeBookByTitle = function(title){
   this.webstorageStore();
   console.log("removed: "+ removed);
   return removed;
-
 }
-
 Library.prototype.removeBookByAuthor = function(authorName){
   if (!this.validateString(authorName)){
     return false;
@@ -171,7 +166,7 @@ Library.prototype.getRandomAuthorName = function(){
 Library.prototype.validateString = function (value){
   if (value == null || typeof(value) === "undefined" || value.length == 0){
     console.log("Invalid entry on validateString");
-    alert('Invalid entry or field left empty');
+    //alert('Invalid entry or field left empty');
     $('.jumbotron').html("<h2 class=\"blue-font\">" + "Invalid entry or field left empty" + "</h2>");
     return false;
   }else{
@@ -236,31 +231,38 @@ Library.prototype.getAuthors = function (){
 //************
 /* Jquery function handlers */
 Library.prototype.displayBookByTitle = function(){
-  console.log('I got to the function fine.....');
   var bookinput = $('#get-book-by-input').val();
   if (bookinput!=''){
     bookinput = bookinput.trim();
-    console.log('test of book: ' + JSON.stringify(bookinput));
     var book = this.getBookByTitle(bookinput);
-    console.log('test of book: ' + JSON.stringify(book));
-    $('#get-book-by-input').val('');
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+    if (book.length != 0){
+      //$('#get-book-by-input').val('');
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+    }else{
+      //$('#get-book-by-input').val('');
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found no titles matching your search" + "</h2>");
+    }
   }else{
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + "</h2>");
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Please enter a title " + "</h2>");
   }
+  $('#get-book-by-input').val('');
 }
 Library.prototype.displayBookByAuthor = function(){
   var bookinput = $('#get-book-by-input').val();
   if (bookinput!=''){
     bookinput = bookinput.trim();
-    console.log('test of book: ' + JSON.stringify(bookinput));
     var book = this.getBooksByAuthor(bookinput);
-    console.log('test of book: ' + JSON.stringify(book));
-    $('#get-book-by-input').val('');
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+    if (book.length != 0){
+      //$('#get-book-by-input').val('');
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + book.toString() + "</h2>");
+    }else{
+      //$('#get-book-by-input').val('');
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found no authors matching your search" + "</h2>");
+    }
   }else{
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We found these titles: " + "</h2>");
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Please enter a name " + "</h2>");
   }
+  $('#get-book-by-input').val('');
 }
 Library.prototype.displayRandomBook = function(){
   var book = this.getRandomBook();//
@@ -278,10 +280,14 @@ Library.prototype.remBookByAuthor = function(){
     console.log('remBookByAuthor: ' + bookinput);
     var result = this.removeBookByAuthor(bookinput);
     $('#remove-book').val('');
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed books by this author: " + (result?bookinput:'') + "</h2>");
-    this.populateTable();
+    if (result == true){
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed books by this author: " + (result?bookinput:'') + "</h2>");
+      this.populateTable();
+    }else{
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We didn't find any books by the author you requested" + "</h2>");
+    }
   }else{
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed books by this author: " + "</h2>");
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Please enter an author name " + "</h2>");
   }
 }
 Library.prototype.remBookByTitle = function(){
@@ -291,16 +297,22 @@ Library.prototype.remBookByTitle = function(){
     console.log('remBookByTitle: ' + bookinput);
     var result = this.removeBookByTitle(bookinput);
     $('#remove-book').val('');
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed this book: " + (result?bookinput:'') + "</h2>");
-    this.populateTable();
+    if (result == true){
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed this book: " + (result?bookinput:'') + "</h2>");
+      this.populateTable();
+    }else{
+      $('.jumbotron').html("<h2 class=\"blue-font\">" + "We didn't find any books with the title you requested" + "</h2>");
+    }
   }else{
-    $('.jumbotron').html("<h2 class=\"blue-font\">" + "We removed this book: " + "</h2>");
+    $('.jumbotron').html("<h2 class=\"blue-font\">" + "Please enter a title" + "</h2>");
   }
 };
+
 Library.prototype.addBookUser = function(){
   var bookinput1 = $('#addbook-title').val().trim();
   var bookinput2 = $('#addbook-author').val().trim();
-  var bookinput3 = $('#addbook-pages').val();
+  var bookinput3 = parseInt($('#addbook-pages').val().trim());
+  //var bookinput3 = $('#addbook-pages').val();
   var bookinput4 = $('#addbook-date').val();
   var bookAdd = new Book(bookinput1,bookinput2,bookinput3,bookinput4);
   var addBookvalue = this.addBook(bookAdd);
@@ -309,8 +321,9 @@ Library.prototype.addBookUser = function(){
   $('#addbook-author').val('');
   $('#addbook-pages').val(null);
   $('#addbook-date').val(null);
-  $('.jumbotron').html("<h2 class=\"blue-font\">" + (addBookvalue?'Books successfully added':'Failed to add book') + "</h2>");
+  $('.jumbotron').html("<h2 class=\"blue-font\">" + (addBookvalue?'Book successfully added':'Failed to add book') + "</h2>");
 }
+
 Library.prototype.populateTable = function(){
   var tableElements = "<tbody><tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
   for (var i = 0;  i < this.books.length; i++) {
@@ -321,6 +334,7 @@ Library.prototype.populateTable = function(){
   tableElements += "</tbody>";
   $("#library-table").html(tableElements);
 }
+
 Library.prototype.showAddMultipleBooks = function(){
   var addBooksDiv = $('#multiple-books-table-div');
   if (addBooksDiv.css("display") == "none"){
@@ -338,7 +352,7 @@ Library.prototype.showAddMultipleBooks = function(){
   if (authorsDiv.css("display") == "none"){
     authorsDiv.css("display", "block");
     var arrayAuthors = this.getAuthors();
-    var tableElements = "<tbody><tr><th>Author</th></tr>";
+    var tableElements = "<tbody><tr><th>List of Authors</th></tr>";
     for (var i = 0;  i < arrayAuthors.length; i++) {
       tableElements += "<tr><td>" + arrayAuthors[i];
       tableElements += "</td></tr>";
@@ -359,6 +373,7 @@ Library.prototype.addingRowsAddBooks = function(){
   	            '<td><input id=\"multiple-input-date'   + multiRowCount + '\" size=\"10\"  type=\"date\"></td></tr>');
   multiRowCount++;
 }
+
 Library.prototype.emptyMultipleBooksTable = function(){
   var tableElements = "<tbody><tr><th>Title</th><th>Author</th><th>Pages</th><th>Publish date</th></tr>";
   tableElements += "<tr><td><input id=\"multiple-input-title0\" size=\"30\" type=\"text\"></td>";
@@ -367,6 +382,11 @@ Library.prototype.emptyMultipleBooksTable = function(){
   tableElements += "<td><input id=\"multiple-input-date0\" size=\"10\"  type=\"date\"></td></tr></tbody>";
   multiRowCount = 1;
   $("#addbooks-table").html(tableElements);
+  //just added this to test clearing in firefox
+  $('#multiple-input-title0').val('');
+  $('#multiple-input-author0').val('');
+  $('#multiple-input-pages0').val(null);
+  $('#multiple-input-date0').val(null);
 }
 
 Library.prototype.AddBooksMultiple = function(){
@@ -376,11 +396,10 @@ Library.prototype.AddBooksMultiple = function(){
     var bookinputs2 = $('#multiple-input-author' + i).val().trim();
     var bookinputs3 = $('#multiple-input-pages'  + i).val();
     var bookinputs4 = $('#multiple-input-date'   + i).val();
-    console.log('I am input title: ' + bookinputs1 );
     var bookAdd = new Book(bookinputs1,bookinputs2,bookinputs3,bookinputs4);
     //this part in if, for no more books to add, user clicked NO
     variousBooksEntry.push(bookAdd);
-    console.log('I am the array of multiple books title: ' + JSON.stringify(variousBooksEntry));
+    //console.log('I am the array of multiple books title: ' + JSON.stringify(variousBooksEntry));
   }
   var booksAddedTrue = this.addBooks(variousBooksEntry);
   this.populateTable();
@@ -405,15 +424,12 @@ Library.prototype.bindEvents = function(){
   this.$addMoreNoButton1.on('click',($.proxy(this.AddBooksMultiple, this)));
 }
 Library.prototype.webStorageInit = function(){
-  if (typeof(Storage) !== "undefined") { //says typeof(Storage) it is function
-      //alert('debug this is testStorage: ' + JSON.stringify(testStorage));
-      var testStorage = JSON.parse(localStorage.getItem("myLibrary"));
+  if (typeof(Storage) !== "undefined") {
+      var testStorage = localStorage.getItem("myLibrary");
       console.log('this is testStorage: ' + JSON.stringify(testStorage));
       if (typeof(testStorage) !== "undefined" && testStorage != null) {
-        //alert('this is testStorage: ' + JSON.stringify(testStorage));
-        this.books = testStorage;
+        this.books = JSON.parse(testStorage);
       } else {
-
         localStorage.setItem("myLibrary", JSON.stringify(this.books));
       }
   };
@@ -436,7 +452,6 @@ Library.prototype.init = function(){
   $("#addMore-Yes-Button").hide();
   $('.jumbotron').html("<h2 class=\"blue-font\">Stay Tuned For Our Library Updates</h2>");
   this.webStorageInit();
-
   this.populateTable();
 }
 
@@ -454,26 +469,22 @@ function startLibrary(libraryInstance){
   var bookEntry3 = new Book("the sea", "gomez", 67, new Date(2017, 5, 24));
   var variousBooks = [bookEntry1, bookEntry2, bookEntry3];
   libraryInstance.addBooks(variousBooks);
-  //console.log(JSON.stringify(variousBooks));
   var bookEntry11 = new Book("Windows", "Microsoft", 30, new Date('03/25/2015'));
   var bookEntry21 = new Book("door to nowhere", "Smith", 28, new Date('Mar 25 2015'));
   libraryInstance.addBook(bookEntry11);
   libraryInstance.addBook(bookEntry21);
-  libraryInstance.removeBookByAuthor('rudland');
-  libraryInstance.removeBookByTitle('the sea');
-  console.log(libraryInstance.getBooksByAuthor('r').toString());
-  console.log("Showing all authors: ");
+  //libraryInstance.removeBookByAuthor('rudland');
+  //libraryInstance.removeBookByTitle('the sea');
+  //console.log(libraryInstance.getBooksByAuthor('r').toString());
+  //console.log("Showing all authors: ");
   //libraryInstance.getAuthors();
 }
 
 $(document).ready(function(){
-  //newLibrary.populateTable();
   var newLibrary = new Library();
-startLibrary(newLibrary);
   newLibrary.init();
-
   newLibrary.bindEvents();
-  //startLibrary(newLibrary); moved to top because when storage removed, start needs to be first
+  startLibrary(newLibrary);
   newLibrary.webstorageStore();
   newLibrary.populateTable();
 }); //end of document ready
