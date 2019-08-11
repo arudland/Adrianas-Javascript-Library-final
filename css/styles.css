@@ -1,0 +1,106 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.red-border{
+  border: 5px solid red;
+}
+
+.bold-title{
+  font-weight: bolder;
+}
+
+.red-font{
+  color :red;
+}
+
+.blue-font{
+  color :rgb(19, 26, 208);
+}
+
+.header-background{
+  background-color: rgb(209, 74, 24);
+}
+.orange-text-color{
+  color: rgb(209, 74, 24);
+}
+.black-background{
+  background-color: black;
+}
+
+.center-divs{
+  align-items: center;
+}
+.top-pad{
+  padding-top: 20px;
+}
+.top-pad-header-center{
+  padding-top: 25px;
+}
+.left-pad-addbook{
+  padding-left:0px;
+}
+
+.top-margin-buttons{
+  margin-top: 6px;
+}
+.top-margin{
+  margin-top: 30px;
+}
+.top-margin-random{
+  margin-top: 20px;
+}
+.row-padding-bottom{
+  padding-bottom: 20px;
+}
+.garamond-font{
+  font-family: garamond;
+}
+.top-margin-zero{
+  margin-top:0px;
+}
+.bottom-margin-zero{
+  margin-bottom: 0px;
+}
+.blue-font{
+  color:rgb(60, 57, 128);
+  font-weight: bolder;
+}
+.header-font-size{
+  font-size: 20px;
+}
+.well-change-size{
+  width: 80%;
+}
+.well-list-authors{
+  width: 40%;
+
+}
+.margin-left-column{
+  margin-left: 10px;
+}
+.button-round{
+  border-radius: 5px;
+}
+.center-text{
+  text-align: center;
+}
+.center-Div-authors
+{
+    margin-left:15%;
+    margin-right:auto;
+    width: 400 px;
+}
+.center-Div-add-one-book
+{
+    margin-left:auto;
+    margin-right:auto;
+    width: 500 px;
+}
+
+.well-background-color{
+/*background-color: rgb(217, 214, 78);*/
+background-color: rgb(110, 183, 190)
+}
